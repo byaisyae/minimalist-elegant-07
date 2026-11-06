@@ -1,0 +1,373 @@
+/* Gaya kustom undangan (animasi scroll, cover, bingkai desktop, dll). Utility Tailwind ada di index.html. */
+.rv,
+.rl,
+.rr,
+.rz {
+  opacity: 0;
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0s);
+}
+.rv {
+  transform: translateY(34px);
+}
+.rl {
+  transform: translateX(-50px);
+}
+.rr {
+  transform: translateX(50px);
+}
+.rz {
+  transform: scale(0.88);
+}
+.in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+body.lock {
+  overflow: hidden;
+}
+#cover {
+  transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+}
+#cover.up {
+  transform: translateY(-100%);
+}
+.bg {
+  background-size: cover;
+  background-position: center;
+}
+#app {
+  overflow-x: hidden;
+}
+@media (min-width: 1024px) {
+  :root {
+    --w: clamp(420px, 34vw, 520px);
+  }
+  #app {
+    width: var(--w);
+    margin-left: auto;
+    position: relative;
+    z-index: 10;
+    background: #e4ecf7;
+    box-shadow: -24px 0 70px rgba(60, 90, 140, 0.3);
+  }
+  #cover {
+    left: auto !important;
+    width: var(--w);
+  }
+  #nav {
+    left: calc(100% - var(--w) / 2) !important;
+  }
+  body {
+    background: #e4ecf7;
+  }
+}
+#nav {
+  --tw-translate-y: calc(100% + 2rem);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+}
+#nav {
+  background: linear-gradient(145deg, #eaf1fb, #dbe6f4);
+  border: 0;
+  box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
+}
+#nav.show {
+  --tw-translate-y: 0px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.nv.on {
+  color: #4a6fa8;
+  font-weight: 600;
+  background: #e4ecf7;
+  box-shadow: inset 3px 3px 7px var(--neu-dark), inset -3px -3px 7px var(--neu-light);
+}
+.nv.on svg {
+  transform: translateY(-1px) scale(1.08);
+}
+.nv svg {
+  transition: transform 0.25s ease;
+}
+.sl {
+  transition: opacity 1.2s ease;
+}
+.ph {
+  background: linear-gradient(135deg, #d5e1f1, #c3d3ea);
+}
+@keyframes zm {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+.kb {
+  animation: zm 18s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rl,
+  .rr,
+  .rz {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .kb {
+    animation: none;
+  }
+}
+.wd {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i) * 0.14s + 0.1s);
+}
+.in .wd {
+  transform: none;
+}
+.rc img {
+  clip-path: inset(0 0 100% 0);
+  transform: scale(1.35);
+  transition:
+    clip-path 1.3s cubic-bezier(0.7, 0, 0.2, 1),
+    transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0s);
+}
+.rc.in img {
+  clip-path: inset(0);
+  transform: none;
+}
+.fx {
+  background-size: auto 135%;
+  background-repeat: no-repeat;
+}
+#pg {
+  left: 0;
+  right: 0;
+  transform-origin: left;
+}
+@media (min-width: 1024px) {
+  #pg {
+    left: calc(100% - var(--w));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rc img {
+    clip-path: none;
+    transform: none;
+  }
+  .wd {
+    transform: none;
+  }
+}
+
+/* carousel foto mempelai: 3 slide [A,B,A] supaya loop searah mulus.
+   .pc-r = foto bergeser ke kanan (mempelai wanita), .pc-l = ke kiri (mempelai pria) */
+.pc > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pc-track {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+}
+.pc-track > img {
+  width: 33.3334%;
+  height: 100%;
+  flex: none;
+  object-fit: cover;
+}
+.pc-r {
+  animation: pcR 9s ease-in-out infinite;
+}
+.pc-l {
+  animation: pcL 9s ease-in-out infinite;
+}
+@keyframes pcL {
+  0%, 38% { transform: translateX(0); }
+  50%, 88% { transform: translateX(-33.3333%); }
+  100% { transform: translateX(-66.6667%); }
+}
+@keyframes pcR {
+  0%, 38% { transform: translateX(-66.6667%); }
+  50%, 88% { transform: translateX(-33.3333%); }
+  100% { transform: translateX(0); }
+}
+/* varian vertikal: .pc-d = foto bergeser ke bawah, .pc-u = ke atas */
+.pc-v {
+  flex-direction: column;
+  width: 100%;
+  height: 300%;
+}
+.pc-v > img {
+  width: 100%;
+  height: 33.3334%;
+}
+.pc-d {
+  animation: pcD 9s ease-in-out infinite;
+}
+.pc-u {
+  animation: pcU 9s ease-in-out infinite;
+}
+@keyframes pcU {
+  0%, 38% { transform: translateY(0); }
+  50%, 88% { transform: translateY(-33.3333%); }
+  100% { transform: translateY(-66.6667%); }
+}
+@keyframes pcD {
+  0%, 38% { transform: translateY(-66.6667%); }
+  50%, 88% { transform: translateY(-33.3333%); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-v { height: 100%; }
+  .pc-track { animation: none; width: 100%; transform: none; }
+  .pc-track > img { width: 100%; }
+  .pc-track > img:not(:first-child) { display: none; }
+}
+
+/* galeri: grid pola 1 lebar + 2 + 2 (diulang tiap 5 foto) */
+.gal-item img {
+  transition: transform 0.6s ease;
+}
+.gal-item:hover img {
+  transform: scale(1.05);
+}
+
+/* (lama) galeri slider + thumbnail */
+.gal-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gal-scroll::-webkit-scrollbar {
+  display: none;
+}
+.gal-view {
+  touch-action: pan-y;
+}
+.gal-track {
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+.gal-track.drag {
+  transition: none;
+}
+.gal-th {
+  opacity: 0.55;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: opacity 0.3s, outline-color 0.3s;
+}
+.gal-th.is-on {
+  opacity: 1;
+  outline-color: #6f93c9;
+}
+
+/* Wedding Gift: panel rekening/alamat tersembunyi, terbuka dengan tombol "Klik di sini" */
+.gift-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.45s ease,
+    visibility 0s linear 0.6s;
+}
+.gift-panel.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.gift-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 0.5rem;
+}
+.gift-panel.open .gift-inner {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+.gift-inner {
+  transition: padding 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.gift-ico {
+  transform-origin: 50% 80%;
+  animation: giftWiggle 2.8s ease-in-out infinite;
+}
+#giftToggle.is-open .gift-ico {
+  animation: none;
+}
+@keyframes giftWiggle {
+  0%, 70%, 100% { transform: rotate(0); }
+  76% { transform: rotate(-12deg); }
+  82% { transform: rotate(10deg); }
+  88% { transform: rotate(-6deg); }
+  94% { transform: rotate(3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gift-panel,
+  .gift-inner {
+    transition: none;
+  }
+  .gift-ico {
+    animation: none;
+  }
+}
+
+/* ===== Tema soft blue: neumorphism (soft UI) ===== */
+:root {
+  --neu-dark: rgba(143, 165, 205, 0.6);
+  --neu-light: rgba(255, 255, 255, 0.95);
+}
+.glass,
+.glass-clear {
+  background: linear-gradient(145deg, #eaf1fb, #dbe6f4);
+  border: 0;
+  box-shadow: 10px 10px 22px var(--neu-dark), -10px -10px 22px var(--neu-light);
+}
+.gbtn {
+  background: linear-gradient(145deg, #eaf1fb, #dbe6f4);
+  border: 0;
+  color: #3f6199;
+  box-shadow: 5px 5px 11px var(--neu-dark), -5px -5px 11px var(--neu-light);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.gbtn:hover {
+  box-shadow: 2px 2px 5px var(--neu-dark), -2px -2px 5px var(--neu-light);
+}
+.gbtn:active {
+  box-shadow: inset 4px 4px 9px var(--neu-dark), inset -4px -4px 9px var(--neu-light);
+}
+.neu-in {
+  background: #e4ecf7;
+  border: 0;
+  box-shadow: inset 5px 5px 11px var(--neu-dark), inset -5px -5px 11px var(--neu-light);
+}
+select option {
+  background: #e4ecf7;
+  color: #27384f;
+}
+::placeholder {
+  color: #8da0bb;
+}
+/* shadow bawah cover: kaca biru buram yang memudar ke atas */
+.cover-glass {
+  background: linear-gradient(to top, rgba(70, 105, 160, 0.6), rgba(120, 155, 205, 0.22) 70%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-mask-image: linear-gradient(to top, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 45%, transparent 100%);
+}
